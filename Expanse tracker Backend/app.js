@@ -3,7 +3,7 @@ const path = require('path');
 var app=express();
 var cors=require('cors');
 const sequelize = require('./util/database');
-const User = require('./models/user');
+const User = require('./models/expanse');
 app.use(cors());
 
 const bodyParser = require('body-parser');
@@ -12,8 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
-
-
 
 
 sequelize.sync()

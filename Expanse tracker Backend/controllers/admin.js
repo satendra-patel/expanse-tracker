@@ -1,16 +1,16 @@
-const User = require('../models/user');
+const Expanse = require('../models/expanse');
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 router.use(bodyParser.json())
 router.use(bodyParser.urlencoded({ extended: true }));
 
-exports.postAddUser= async (req,res,next)=>{
+exports.postExpanse= async (req,res,next)=>{
     try{
         const expanse_name = req.body.expanse_name;
         const expanse_category = req.body.expanse_category;
         const amount = req.body.amount;
-        const data= await User.create({expanse_name:expanse_name, expanse_category:expanse_category, amount:amount})
+        const data= await Expanse.create({expanse_name:expanse_name, expanse_category:expanse_category, amount:amount})
         res.status(201).json({newUserDetail:data})
     }
     catch(err){
@@ -22,13 +22,13 @@ exports.postAddUser= async (req,res,next)=>{
     
 }
 
-exports.getUsers= async (req,res,next)=>{
+exports.getExpanses= async (req,res,next)=>{
     try{
-        const users=await User.findAll();
-        res.status(200).json({allUsers:users})
+        const expanses=await Expanse.findAll();
+        res.status(200).json({allExpanses:expanses})
     }
     catch(error){
-        console.log("Get user is failing",JSON.stringify(error));
+        console.log("Get expanse is failing",JSON.stringify(error));
         res.status(500).json({
             error:error
         })
@@ -36,11 +36,11 @@ exports.getUsers= async (req,res,next)=>{
     
 }
 
-exports.deleteUser= async(req,res,next)=>{
+exports.deleteExpanse= async(req,res,next)=>{
     try{
         const uId=req.params.id;
         console.log(uId);
-        await User.destroy({where:{id:uId}});
+        await Expanse.destroy({where:{id:uId}});
         
         res.sendStatus(200);
     }
@@ -50,3 +50,20 @@ exports.deleteUser= async(req,res,next)=>{
     }
     
 }
+// exports.editExpanse= async(req,res,next)=>{
+//     try{
+//         const uId=req.params.id;
+//         console.log(uId);
+//         await Expanse.findByPk(uID);
+//         const expanse_name = req.body.expanse_name;
+//         const expanse_category = req.body.expanse_category;
+//         const amount = req.body.amount;
+//         const data= await Expanse.update({expanse_name:expanse_name, expanse_category:expanse_category, amount:amount})
+//         res.status(201).json({newUserDetail:data})
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.status(500).json(err);
+//     }
+    
+// }
